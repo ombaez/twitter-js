@@ -2,7 +2,7 @@
 <p>Esto es un esqueleto de un template.</p>
 <p>{{ prueba }}</p>
 <ul>
-{% for person in people %}
-  <li>{{ person.name }}</li>
+{% for tweet in tweets %}
+  <li><b>{{ tweet.name }}</b> {{tweet.content}}</li>
 {% endfor %}
 </ul>

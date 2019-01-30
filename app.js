@@ -1,37 +1,47 @@
 const express = require( 'express' );
 const app = express();
 const nunjucks = require('nunjucks')
+const tweetBank = require('./tweetBank')
+
 var port = 3000
+
 
 app.use(function (req,res,next){
     console.log('Logger')
     next()
 })
 
-app.set('view engine', 'html'); // hace que res.render funcione con archivos html
-app.engine('html', nunjucks.render); // cuando le den archivos html a res.render, va a usar nunjucks
-nunjucks.configure('views'); // apunta a nunjucks al directorio correcto para los templates
-
+app.set('view engine', 'html'); 
+app.engine('html', nunjucks.render); 
+nunjucks.configure('views'); 
 nunjucks.configure('views', {noCache: true});
-nunjucks.render('index.html', locals, function (err, output) {
+
+nunjucks.render('index.html', tweets, function (err, output) {
     console.log(output);
 });
+var tweets = tweetBank.list()
+// var locals = {
+//     name: name,
+//     content:content
+// };
 
-var locals = {
-    title: 'TWITTER',
-    people: [
-        { name: 'Persona1'},
-        { name: 'Persona2' },
-        { name: 'Persona3'}
-    ]
-};
+// const people = [{name: 'Full'}, {name: 'Stacker'}, {name: 'Son'}];
 
-const people = [{name: 'Full'}, {name: 'Stacker'}, {name: 'Son'}];
+// app.get('/', function (req,res){
+//     // res.send('Root')
+//     res.render( 'index', {title: locals.title, people: locals.people, prueba : 'UN STRING'} );
+// })
 
 app.get('/', function (req,res){
-    // res.send('Root')
-    res.render( 'index', {title: locals.title, people: locals.people, prueba : 'UN STRING'} );
+    console.log(tweets)
+    res.render( 'index', {
+        title : 'Tweets',
+        tweets: tweets,
+        // , content: tweets[0].content
+    } );
+
 })
+
     
 app.get('/user', function (req,res){
     res.send('Root/Usuarios')
