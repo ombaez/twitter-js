@@ -3,7 +3,7 @@ const app = express();
 const nunjucks = require('nunjucks')
 const tweetBank = require('./tweetBank')
 
-var port = 3000
+var port = 8080
 
 
 app.use(function (req,res,next){
